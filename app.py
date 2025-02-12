@@ -103,15 +103,27 @@ def ask_question(question: str):
         context_text += f"\n\nالمستند القانوني:\n{best_chunk}"
 
     headers = {"Authorization": f"Bearer {OPENROUTER_API_KEY}", "Content-Type": "application/json"}
-    payload = {"model": MODEL_NAME, "messages": [{"role": "system", "content": context_text}, {"role": "user", "content": question}], "temperature": 0.3, "max_tokens": 1000}
+    payload = {
+        "model": MODEL_NAME,
+        "messages": [
+            {"role": "system", "content": context_text},
+            {"role": "user", "content": question}
+        ],
+        "temperature": 0.3,
+        "max_tokens": 1000
+    }
     
-    response = requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
-    response_data = response.json()
-    
-    if 'choices' in response_data and len(response_data['choices']) > 0:
-        return {"response": response_data['choices'][0]['message']['content']}
-    else:
-        return {"error": "لم يتم استلام رد مناسب"}
+    try:
+        response = requests.post(OPENROUTER_API_URL, json=payload, headers=headers)
+        response_data = response.json()
+
+        if 'choices' in response_data and len(response_data['choices']) > 0:
+            return {"response": response_data['choices'][0]['message']['content']}
+        else:
+            return {"error": "لم يتم استلام رد مناسب", "details": response_data}
+
+    except Exception as e:
+        return {"error": f"حدث خطأ أثناء الاتصال بـ API: {str(e)}"}
 
 if __name__ == "__main__":
     import uvicorn
