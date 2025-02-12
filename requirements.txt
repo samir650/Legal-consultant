@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+requests
+pdfplumber
+arabic-reshaper
+python-bidi
+scikit-learn
