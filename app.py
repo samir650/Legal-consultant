@@ -25,6 +25,7 @@ SYSTEM_PROMPT = """أنت محامي مصري متخصص في جرائم الس�
 5. تعتمد على النصوص القانونية من المستند المرفق (إن وجد).
 6. يجب أن تقتصر الإجابة على الأسئلة القانونية فقط، ولا يجوز الإجابة على الأسئلة العامة التي لا تتعلق بالقانون."""
 
+
 PDF_FILE_PATH = "D:/layer project/جريمة السرقة (1).pdf"
 
 def extract_text_from_pdf(file_path):
@@ -66,7 +67,13 @@ def home():
                     body: JSON.stringify({ question: question })
                 });
                 const result = await response.json();
-                document.getElementById("response").innerText = result.response || result.error;
+                if (result.response) {
+                    document.getElementById("response").innerText = result.response;
+                } else if (result.error) {
+                    document.getElementById("response").innerText = "خطأ: " + result.error;
+                } else {
+                    document.getElementById("response").innerText = "حدث خطأ غير متوقع!";
+                }
             }
         </script>
     </head>
