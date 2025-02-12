@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+import os
 import pdfplumber
 import arabic_reshaper
 from bidi.algorithm import get_display
@@ -70,3 +71,8 @@ def ask_question(question: str):
         return {"response": response_data['choices'][0]['message']['content']}
     else:
         return {"error": "لم يتم استلام رد مناسب"}
+
+if __name__ == "__main__":
+    import uvicorn
+    PORT = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=PORT)
