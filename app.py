@@ -46,6 +46,10 @@ def find_relevant_chunk(question, chunks):
     best_chunk_index = similarities.argmax()
     return chunks[best_chunk_index]
 
+@app.get("/")
+def home():
+    return {"message": "مرحبًا بك في مستشارك القانوني! استخدم /docs لاستكشاف الـ API"}
+
 @app.get("/load_pdf/")
 def load_pdf():
     text = extract_text_from_pdf(PDF_FILE_PATH)
