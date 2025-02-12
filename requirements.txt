@@ -1,7 +1,6 @@
-fastapi
-uvicorn
+streamlit
 requests
 pdfplumber
-arabic-reshaper
+arabic_reshaper
 python-bidi
 scikit-learn
