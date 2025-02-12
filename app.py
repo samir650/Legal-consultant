@@ -6,6 +6,8 @@ from bidi.algorithm import get_display
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import requests
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
 from typing import List
 
 app = FastAPI()
@@ -46,9 +48,37 @@ def find_relevant_chunk(question, chunks):
     best_chunk_index = similarities.argmax()
     return chunks[best_chunk_index]
 
-@app.get("/")
+@app.get("/", response_class=HTMLResponse)
 def home():
-    return {"message": "مرحبًا بك في مستشارك القانوني! استخدم /docs لاستكشاف الـ API"}
+    return """
+    <!DOCTYPE html>
+    <html lang="ar">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>مستشارك القانوني</title>
+        <script>
+            async function askQuestion() {
+                const question = document.getElementById("question").value;
+                const response = await fetch("/ask_question/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question: question })
+                });
+                const result = await response.json();
+                document.getElementById("response").innerText = result.response || result.error;
+            }
+        </script>
+    </head>
+    <body style="text-align: center; font-family: Arial, sans-serif;">
+        <h1>مستشارك القانوني</h1>
+        <input type="text" id="question" placeholder="اكتب سؤالك هنا" style="width: 80%; padding: 10px; margin: 10px;">
+        <button onclick="askQuestion()" style="padding: 10px;">إرسال</button>
+        <h3>الإجابة:</h3>
+        <p id="response" style="border: 1px solid #ccc; padding: 10px;"></p>
+    </body>
+    </html>
+    """
 
 @app.get("/load_pdf/")
 def load_pdf():
