@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 import requests
 import pdfplumber
 import arabic_reshaper
@@ -8,7 +9,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # Configure OpenRouter API
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-import os
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 MODEL_NAME = "google/gemini-2.0-pro-exp-02-05:free"
 
