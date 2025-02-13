@@ -12,7 +12,7 @@ OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 MODEL_NAME = "google/gemini-2.0-pro-exp-02-05:free"
 
-uploaded_file = 'D:\layer project\جريمة السرقة (1).pdf'
+uploaded_file = 'D:\githup_projects\layers website'
 
 # استخراج النص من PDF مع الحفاظ على اتصال الأحرف العربية
 
