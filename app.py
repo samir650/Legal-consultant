@@ -8,7 +8,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # Configure OpenRouter API
 OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions"
-OPENROUTER_API_KEY = "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"
+import os
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 MODEL_NAME = "google/gemini-2.0-pro-exp-02-05:free"
 
 uploaded_file = 'جريمة_السرقة.pdf'
